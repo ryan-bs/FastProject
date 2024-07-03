@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  fastproject:
+    image: ${DOCKER_REGISTRY-}fastproject
+    build:
+      context: .
+      dockerfile: FastProject/Dockerfile
+
+
+  project.database:
+    image: postgres:latest
+    container_name: project.database
+    environment:
+      - POSTGRES_DB=projects
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/projects-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
