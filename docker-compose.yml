@@ -6,7 +6,8 @@ services:
     build:
       context: .
       dockerfile: FastProject/Dockerfile
-
+    networks:
+      - fast_project
 
   project.database:
     image: postgres:latest
@@ -16,6 +17,14 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.containers/projects-db:/var/lib/postgresql/data
+      - projects-db:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - fast_project
+
+networks:
+  fast_project:
+
+volumes:
+  projects-db:
